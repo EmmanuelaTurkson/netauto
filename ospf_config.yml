@@ -1,0 +1,78 @@
+---
+- name: Basic Router Configuration
+  hosts: R2:R3
+  gather_facts: no
+  
+  vars_files:
+    - vars.yml
+    
+  tasks:
+    - name: Enter enable mode
+      ios_command:
+        commands:
+          - enable
+      register: enable_mode
+
+    - name: Enter configuration mode
+      ios_command:
+        commands:
+          - conf t
+      register: conf_mode
+      when: enable_mode is success
+      
+         
+# ROUTER 2 OSPF CONF
+    - name: Configure OSPFv3 with router ID for router2
+      when: inventory_hostname == "R2"
+      ios_config:
+        timeout: 60
+        lines:
+          - router-id 2.2.2.2
+        parents:
+          - ipv6 router ospf 1
+      
+    - name: Configure interfaces for OSPFv3 on Router2
+      when: inventory_hostname == "R2"
+      ios_config:
+        lines:
+          - int loopback0
+          - ipv6 ospf 1 area 0
+          - int s1/1
+          - ipv6 ospf 1 area 0
+
+        
+    - name: Configure OSPFv2 on Router 2
+      when: inventory_hostname == "R2"
+      ios_config:
+        lines:
+          - router-id 2.2.2.2
+          - network 192.168.4.0 0.0.0.3 area 0
+          - network 192.168.3.0 0.0.0.255 area 0
+        parents:
+          - router ospf 1
+      
+# ROUTER 3 OSPF CONF
+    - name: Configure OSPFv3 with router ID for router3
+      when: inventory_hostname == "R3"
+      ios_config:
+        timeout: 60
+        lines:
+          - router-id 3.3.3.3
+        parents:
+          - ipv6 router ospf 1
+
+          
+    - name: Write changes
+      ios_command:
+        commands:
+          - "wr"
+        
+      
+
+
+
+
+
+
+
+
