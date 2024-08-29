@@ -1,0 +1,14 @@
+---
+- name: SHOW IP INTERFACES 
+  hosts: routers
+
+  tasks:
+    - name: “Show ip addresses"
+      ios_command:
+        commands: "show ip inte brief"
+      register: output
+
+    - name: print output
+      debug:
+        var: output.stdout_lines[0]
+
