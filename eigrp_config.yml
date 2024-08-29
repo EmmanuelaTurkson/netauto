@@ -1,0 +1,63 @@
+---
+- name: Basic Router Configuration
+  hosts: R1:R2
+  gather_facts: no
+  
+  
+    
+  tasks:
+    - name: Enter enable mode
+      ios_command:
+        commands:
+          - enable
+      register: enable_mode
+
+    - name: Enter configuration mode
+      ios_command:
+        commands:
+          - conf t
+      register: conf_mode
+      when: enable_mode is success
+      
+         
+# ROUTER 1 EIGRP CONF
+    - name: Configure EIGRP with AS Number for router 1
+      when: inventory_hostname == "R1"
+      ios_config:
+        timeout: 120
+        lines:
+          - network 192.168.1.0 0.0.0.255
+          - network 192.168.6.0 0.0.0.255
+          - network 192.168.2.0 0.0.0.3
+          - no shut
+        parents:
+          - router eigrp 65000
+      
+         
+# ROUTER 2 EIGRP Configuration
+    - name: Configure EIGRP with AS NUMBER for router 2
+      when: inventory_hostname == "R2"
+      ios_config:
+        timeout: 60
+        lines:
+          - network 192.168.2.0 0.0.0.3
+          - no shut
+        parents:
+          - router eigrp 65000
+
+            
+
+    - name: Write changes
+      ios_command:
+        commands:
+          - "wr"
+        
+      
+
+
+
+
+
+
+
+
