@@ -1,0 +1,52 @@
+r1_interfaces:
+  - name: Loopback0
+    ipv4: 192.168.6.1
+    submask: 255.255.255.0
+    ipv6: "2001:db8:cafe:6::1/64"
+    link_local: "fe80::1"
+
+  - name: Loopback1
+    ipv4: 192.168.1.1
+    submask: 255.255.255.0
+    ipv6: "2001:db8:cafe:1::1/64"
+    link_local: "fe80::1"
+
+  - name: Serial1/0
+    ipv4: 192.168.2.1
+    submask: 255.255.255.252
+    ipv6: "2001:db8:cafe:2::1/64"
+    link_local: "fe80::1"
+
+r2_interfaces:
+  - name: Loopback0
+    ipv4: 192.168.3.1
+    submask: 255.255.255.0
+    ipv6: "2001:db8:cafe:3::1/64"
+    link_local: "fe80::2"
+
+  - name: Serial1/0
+    ipv4: 192.168.2.2
+    submask: 255.255.255.252
+    ipv6: "2001:db8:cafe:2::2/64"
+    link_local: "fe80::2"
+
+  - name: Serial1/1
+    ipv4: 192.168.4.1
+    submask: 255.255.255.252
+    ipv6: "2001:db8:cafe:4::1/64"
+    link_local: "fe80::2"
+
+r3_interfaces:
+  - name: Loopback0
+    ipv4: 192.168.5.1
+    submask: 255.255.255.0
+    ipv6: "2001:db8:cafe:5::1/64"
+    link_local: "fe80::3"
+
+  - name: Serial1/1
+    ipv4: 192.168.4.2
+    submask: 255.255.255.252
+    ipv6: "2001:db8:cafe:4::2/64"
+    link_local: "fe80::3"
+
+  
