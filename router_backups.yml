@@ -14,5 +14,5 @@
 #github repository or local machine
    - name: SAVE OUTPUT TO BACKUP FOLDER
      copy:
-       content: "{{ config.stdout[0] }}"
+       content: "{{ running_config.stdout[0] }}"
        dest: "https://github.com/EmmanuelaTurkson/netauto/tree/master/configurations/show_run_{{ inventory_hostname }}.txt"
