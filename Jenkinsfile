@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('BuBasic configurations') {
+        stage('Basic configurations') {
             steps {
                 script {
-                    git branch: 'master', url: 'https://github.com/EmmanuelaTurkson/netauto.git'
+                    git branch: 'master', url: 'https://github.com/EmmanuelaTurkson/netauto'
                 }
                 echo 'Initial Router Configurations...'
                 sh 'ansible-playbook -i hosts config_routers.yml'
