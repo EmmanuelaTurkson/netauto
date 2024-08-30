@@ -61,6 +61,25 @@
         parents:
           - ipv6 router ospf 1
 
+    - name: Configure interfaces for OSPFv3 on Router3
+      when: inventory_hostname == "R3"
+      ios_config:
+        lines:
+          - int loopback0
+          - ipv6 ospf 1 area 0
+          - int s1/1
+          - ipv6 ospf 1 area 0
+
+    - name: Configure OSPFv2 on Router 2
+      when: inventory_hostname == "R3"
+      ios_config:
+        lines:
+          - router-id 3.3.3.3
+          - network 192.168.4.0 0.0.0.3 area 0
+          - network 192.168.5.0 0.0.0.255 area 0
+        parents:
+          - router ospf 1
+      
           
     - name: Write changes
       ios_command:
