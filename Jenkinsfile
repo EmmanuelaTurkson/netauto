@@ -8,7 +8,12 @@ pipeline {
                     git branch: 'master', url: 'https://github.com/EmmanuelaTurkson/netauto'
                 }
                 echo 'Initial Router Configurations...'
-                sh 'ansible-playbook -i hosts config_routers.yml'
+                if (isUnix()) {
+                    sh 'ansible-playbook -i hosts config_routers.yml'
+                } else {
+                    bat 'ansible-playbook -i hosts config_routers.yml'
+                }
+                
             }
         }
 
