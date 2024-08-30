@@ -1,0 +1,13 @@
+---
+- name: SHOW IP OSPF 
+  hosts: R2
+
+  tasks:
+    - name: “Test OSPF"
+      ios_command:
+        commands: "show ip ospf database"
+      register: output
+
+    - name: print output
+      debug:
+        var: output.stdout_lines[0]
