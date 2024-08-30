@@ -39,9 +39,11 @@ pipeline {
                     if (isUnix()) {
                         sh 'ansible-playbook -i hosts ospf_config.yml'
                         sh 'ansible-playbook -i hosts eigrp_config.yml'
+                        sh 'ansible-playbook -i hosts router_backups.yml'
                     } else {
                         bat 'ansible-playbook -i hosts ospf_config.yml'
                         bat 'ansible-playbook -i hosts eigrp_config.yml'
+                        bat 'ansible-playbook -i hosts router_backups.yml'
                     }
                 }
             }
