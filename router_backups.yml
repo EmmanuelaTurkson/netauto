@@ -15,4 +15,4 @@
    - name: SAVE OUTPUT TO BACKUP FOLDER
      copy:
        content: "{{ config.stdout[0] }}"
-       dest: "configurations/show_run_{{ inventory_hostname }}.txt"
+       dest: "https://github.com/EmmanuelaTurkson/netauto/tree/master/configurations/show_run_{{ inventory_hostname }}.txt"
