@@ -1,0 +1,13 @@
+---
+- name: SHOW IP OSPF 
+  hosts: R1
+
+  tasks:
+    - name: “Test EIGRP"
+      ios_command:
+        commands: "show ip eigrp database"
+      register: output
+
+    - name: print output
+      debug:
+        var: output.stdout_lines[0]
