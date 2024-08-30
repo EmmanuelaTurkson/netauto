@@ -80,7 +80,6 @@
         parents:
           - router ospf 1
       
-          
     - name: Write changes
       ios_command:
         commands:
