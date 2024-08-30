@@ -1,6 +1,6 @@
 ---
 - name: SHOW IP EIGRP 
-  hosts: R1
+  hosts: R2
 
   tasks:
     - name: “Test EIGRP"
