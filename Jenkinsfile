@@ -5,39 +5,60 @@ pipeline {
         stage('Basic configurations') {
             steps {
                 script {
+                    // Checkout code from GitHub repository
                     git branch: 'master', url: 'https://github.com/EmmanuelaTurkson/netauto'
+                    
+                    // Initial Router Configurations
+                    echo 'Initial Router Configurations...'
+                    if (isUnix()) {
+                        sh 'ansible-playbook -i hosts config_routers.yml'
+                    } else {
+                        bat 'ansible-playbook -i hosts config_routers.yml'
+                    }
                 }
-                echo 'Initial Router Configurations...'
-                if (isUnix()) {
-                    sh 'ansible-playbook -i hosts config_routers.yml'
-                } else {
-                    bat 'ansible-playbook -i hosts config_routers.yml'
-                }
-                
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Testing IP Brief'
-                sh 'ansible-playbook -i hosts testipbrief.yml'
+                script {
+                    echo 'Testing IP Brief'
+                    if (isUnix()) {
+                        sh 'ansible-playbook -i hosts testipbrief.yml'
+                    } else {
+                        bat 'ansible-playbook -i hosts testipbrief.yml'
+                    }
+                }
             }
         }
 
         stage('Routing configurations') {
             steps {
-                echo 'Running OSPF and EIGRP configuration...'
-                sh 'ansible-playbook -i hosts ospf_config.yml'
-                sh 'ansible-playbook -i hosts eigrp_config.yml'
+                script {
+                    echo 'Running OSPF and EIGRP configuration...'
+                    if (isUnix()) {
+                        sh 'ansible-playbook -i hosts ospf_config.yml'
+                        sh 'ansible-playbook -i hosts eigrp_config.yml'
+                    } else {
+                        bat 'ansible-playbook -i hosts ospf_config.yml'
+                        bat 'ansible-playbook -i hosts eigrp_config.yml'
+                    }
+                }
             }
         }
 
         stage('Routing Test') {
             steps {
-                echo 'Testing OSPF configuration between Router 2 and 3...'
-                sh 'ansible-playbook -i hosts testospf.yml'
-                echo 'Testing EIGRP configuration between Router 1 and 2..'
-                sh 'ansible-playbook -i hosts testeigrp.yml'
+                script {
+                    echo 'Testing OSPF configuration between Router 2 and 3...'
+                    if (isUnix()) {
+                        sh 'ansible-playbook -i hosts testospf.yml'
+                        sh 'ansible-playbook -i hosts testeigrp.yml'
+                    } else {
+                        bat 'ansible-playbook -i hosts testospf.yml'
+                        bat 'ansible-playbook -i hosts testeigrp.yml'
+                    }
+                }
             }
         }
     }
