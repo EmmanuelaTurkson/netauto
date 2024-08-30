@@ -1,11 +1,11 @@
 ---
-- name: SHOW IP OSPF 
+- name: SHOW IP EIGRP 
   hosts: R1
 
   tasks:
     - name: “Test EIGRP"
       ios_command:
-        commands: "show ip eigrp database"
+        commands: "show ip route eigrp"
       register: output
 
     - name: print output
